@@ -48,7 +48,7 @@ export class UserDto {
   @IsOptional()
   address: string;
 
-  @IsObject()
+  // @IsObject()
   @ValidateNested()
   @Type(() => GeoLocationDto)
   geoLocation: GeoLocationDto;
@@ -61,7 +61,7 @@ export class UserDto {
   @IsOptional()
   dob: string;
 
-  @IsObject()
+  // @IsObject()
   @ValidateNested()
   @Type(() => MembersDto)
   members: MembersDto;

@@ -9,7 +9,7 @@ export class TestDto {
   @IsString()
   price: string;
 
-  @IsArray()
+  // @IsArray()
   @ValidateNested()
   @Type(() => PlanDto)
   // @IsNotEmptyObject()

@@ -9,8 +9,10 @@ export class StaffDto {
   email: string;
 
   @IsString()
-  phone: String;
+  phone: string;
 
   @IsString()
   address: string;
+
+  active:boolean
 }

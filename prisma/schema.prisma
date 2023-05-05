@@ -76,7 +76,7 @@ model Staff {
   email   String
   phone   String
   address String
-  active  Boolean
+  active  Boolean @default(true)
 }
 
 model Membership {
@@ -84,7 +84,7 @@ model Membership {
   name        String
   description String
   duration    Int
-  active      Boolean
+  active      Boolean @default(true)
   price       Int
 }
 
@@ -92,7 +92,7 @@ model Membership {
 model Slot {
   id         String     @id @default(uuid())
   date       DateTime
-  isSelected Boolean?   @map("is_selected")
+  isSelected Boolean?   @default(true) @map("is_selected")
   start      DateTime
   end        DateTime
   slots      SlotTime[]
@@ -109,4 +109,70 @@ model SlotTime {
   slotId  String @unique @map("slot_id")
 
   @@map("slot_Time")
+}
+
+model MemberPlan {
+  id          String  @id @default(uuid())
+  name        String
+  price       Int
+  descriptiom String
+  active      Boolean @default(true)
+}
+
+model AppointmentDetail {
+  id            String              @id @default(uuid())
+  // healthPackage HealthPackage?
+  // tests         HealthTest[]
+  name          String
+  email         String
+  gender        String
+  age           Int
+  dob           String
+  mobile        Int
+  date          String
+  time          String
+  password      String
+  address       String
+  status        String?
+  grandTotal    Int
+  pickupCharge  Int
+  discountAmt   Int
+  // uId           String?
+  // geoLocation   GeoLocation
+  // membership    Membership
+  // orderDetail   PaymentOrderSuccess
+  // images        NzUploadFile[]
+}
+
+model HealthPackage {
+  id          String   @id @default(uuid())
+  name        String
+  price       Int
+  active      Boolean  @default(true)
+  parameters  Int
+  healthTests String[]
+  description String
+}
+
+model HealthTest {
+  id             String          @id @default(uuid())
+  name           String
+  price          Int
+  active         Boolean         @default(true)
+  outsource      Boolean         @default(true)
+  homeCollection Boolean         @default(true)
+  // plans          TestPricePlan[]
+  offerPrice     Int?
+}
+
+model TestPricePlan {
+  planId   String @id @default(uuid())
+  planName String
+  price    Int
+}
+
+model PaymentOrderSuccess {
+   razorpay_order_id String @id @default(uuid())
+    razorpay_payment_id String 
+    razorpay_signature String
 }

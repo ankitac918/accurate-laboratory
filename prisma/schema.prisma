@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//START ** USER
+model User {
+  id            String       @id @default(uuid())
+  healthPackage String?
+  tests         String?
+  name          String
+  email         String       @unique
+  gender        String?
+  age           String?
+  mobile        String?
+  password      String
+  address       String?
+  geoLocation   GeoLocation?
+  distance      String?
+  dob           String?
+  members       Member?
+}
+
+model GeoLocation {
+  lat    String
+  long   String
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Member {
+  id          String   @id @default(uuid())
+  members     String[]
+  name        String
+  description String
+  price       String
+  active      Boolean  @default(true)
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+//END USER
+
+//  START ** TEST 
+model test {
+  active         Boolean @default(true)
+  homeCollection Boolean @default(false)
+  id             String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  outsource      Boolean @default(true)
+  plans          Plan[]
+  price          String
+
+  @@map("Tests")
+}
+
+model Plan {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  planeName String
+  price     String
+  test      test   @relation(fields: [testId], references: [id])
+  testId    String @map("test_id") @db.Uuid
+
+  @@map("plans")
+}
+
+//******END TEST************//
+
+model Staff {
+  id      String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name    String
+  email   String
+  phone   String
+  address String
+  active  Boolean
+}
+
+model Membership {
+  id          String  @id @default(uuid())
+  name        String
+  description String
+  duration    Int
+  active      Boolean
+  price       Int
+}
+
+// ******* SLOT MODEL STARTS FROM HERE*************//
+model Slot {
+  id         String     @id @default(uuid())
+  date       DateTime
+  isSelected Boolean?   @map("is_selected")
+  start      DateTime
+  end        DateTime
+  slots      SlotTime[]
+
+  @@map("slots")
+}
+
+model SlotTime {
+  id      String @id @default(uuid())
+  allowed Int
+  booked  Int
+  name    String
+  Slot    Slot   @relation(fields: [slotId], references: [id])
+  slotId  String @unique @map("slot_id")
+
+  @@map("slot_Time")
+}

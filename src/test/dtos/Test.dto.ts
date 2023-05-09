@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsAlpha, IsArray, IsString, ValidateNested } from 'class-validator';
+import {  IsString, ValidateNested } from 'class-validator';
 import { PlanDto } from './Plan.dto';
 
 export class TestDto {

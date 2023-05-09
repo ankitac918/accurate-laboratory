@@ -12,12 +12,13 @@ import { TestDto } from '../dtos/Test.dto';
 import { TestService } from '../testService/test.service';
 import { UUID } from 'crypto';
 import { TestNotFoundException } from '../Exception/testException';
+import { test } from '@prisma/client';
 
 @Controller('test')
 export class TestController {
   constructor(private testService: TestService) {}
   @Post()
-  addTest(@Body() dto: TestDto) {
+  addTest(@Body() dto: test) {
     return this.testService.createTest(dto);
   }
 

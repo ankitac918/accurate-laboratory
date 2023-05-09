@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class GeoLocationDto {
   @IsString()
@@ -9,4 +9,16 @@ export class GeoLocationDto {
 
   @IsString()
   userId: string;
+
+  @IsString()
+  user: string;
+
+  // @IsString()
+  // @IsOptional()
+  // AppointmentDetailId: string;
+
+  @IsString()
+  @IsOptional()
+  AppointmentDetail: object;
+  AppointmentDetailId: any;
 }

@@ -8,7 +8,7 @@ export class GeoLoacationService {
   constructor(private prisma: PrismaService) {}
   async createGeoLocation(dto: GeoLocationDto) {
     try {
-      const Geolocation = await this.prisma.geoLocation.create({
+      const Geolocation =this.prisma.geoLocation.create({
         data: {
           lat: dto.lat,
           long: dto.long,
@@ -19,11 +19,6 @@ export class GeoLoacationService {
 
       return Geolocation;
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        if (error.code === 'P2002') {
-          throw new ForbiddenException('Credentials taken');
-        }
-      }
       throw error;
     }
   }

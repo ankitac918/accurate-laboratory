@@ -10,14 +10,15 @@ import {
 import { UserService } from '../userService/user.service';
 import { UserDto } from '../dtos/user.dto';
 import { UserNotFoundException } from '../exception/userException';
+import { User } from '@prisma/client';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  signup(@Body() dto: UserDto) {
-    return this.userService.signup(dto);
+  signup(@Body() dto: User) {
+    this.userService.signup(dto);
   }
 
   @Get('sigin')

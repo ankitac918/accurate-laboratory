@@ -8,13 +8,7 @@ export class MembersService {
   async createMember(dto: MembersDto) {
     try {
       const Members = await this.prisma.member.create({
-        data: {
-          members: dto.members,
-          name: dto.name,
-          description: dto.description,
-          price: dto.price,
-          userId: dto.userId,
-        },
+        data: dto,
       });
       console.log(Members);
     } catch (error) {

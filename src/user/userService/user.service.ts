@@ -6,9 +6,7 @@ import { ForbiddenException } from '@nestjs/common/exceptions';
 import { Prisma } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { objectEnumValues } from '@prisma/client/runtime';
-import { isObject } from 'class-validator';
-import { isGeneratorObject, isStringObject } from 'util/types';
+import { Exclude } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -20,7 +18,9 @@ export class UserService {
     private config: ConfigService,
   ) {}
 
-  async signup(data: Prisma.UserCreateInput): Promise<any> {
+  async signup(
+    data: Prisma.UserCreateInput
+  ): Promise<any> {
     try {
       const passwordHash = await argon2.hash(data.password);
       const user = await this.prisma.user.create({

@@ -1,16 +1,16 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GeoLocationDto {
-  @IsString()
-  lat: string;
+  @IsNumber()
+  lat: number;
 
-  @IsString()
-  long: string;
+  @IsNumber()
+  long: number;
 
   @IsString()
   userId: string;
 
-  @IsString()
+  @IsString() 
   user: string;
 
   // @IsString()

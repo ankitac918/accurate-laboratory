@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Prisma, PrismaClient, test } from '@prisma/client';
+import { PrismaService } from '../../prisma/prisma.service';
+import { Prisma, test } from '@prisma/client';
 import { TestDto } from '../dtos/Test.dto';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class TestService {
       return test;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        if (error.code === 'P2002') { 
+        if (error.code === 'P2002') {
           throw new ForbiddenException('Credentials taken');
         }
       }
@@ -38,11 +38,11 @@ export class TestService {
   updatetest(id: string, test: TestDto) {
     return this.prisma.test.updateMany({
       where: { id: id },
-      data:test
+      data: test,
     });
   }
 
-  async deleteData(id: string,) { 
+  async deleteData(id: string) {
     return this.prisma.test.deleteMany({
       where: { id: id },
     });

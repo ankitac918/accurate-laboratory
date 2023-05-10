@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { SlotTimeDto } from '../dtos/slotTime.dto';
+import { PrismaService } from '../../prisma/prisma.service';
 import { SlotTime } from '.prisma/client';
 
 @Injectable()

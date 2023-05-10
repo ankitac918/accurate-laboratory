@@ -6,6 +6,7 @@ import { TestModule } from './test/test.module';
 import { StaffModule } from './staff/staff.module';
 import { MembershipModule } from './membership/membership.module';
 import { SlotModule } from './slot/slot.module';
+import { MemberPlanModule } from './member-plan/member-plan.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { SlotModule } from './slot/slot.module';
     TestModule,
     StaffModule,
     MembershipModule,
-    SlotModule
+    SlotModule,
+    MemberPlanModule
   ],
   controllers: [],
   providers: [],

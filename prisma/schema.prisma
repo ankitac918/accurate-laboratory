@@ -26,13 +26,13 @@ model User {
 }
 
 model GeoLocation {
-  id                String              @id @default(uuid())
-  lat               String
-  long              String
-  user              User?               @relation(fields: [userId], references: [id])
-  userId            String?
-  // AppointmentDetailId String             @unique
-  AppointmentDetail AppointmentDetail[]
+  id                  String              @id @default(uuid())
+  lat                 Int
+  long                Int
+  user                User?               @relation(fields: [userId], references: [id])
+  userId              String?
+  // AppointmentDetailId String              @unique
+  AppointmentDetail   AppointmentDetail[]
 }
 
 model Member {
@@ -115,7 +115,7 @@ model MemberPlan {
   id          String  @id @default(uuid())
   name        String
   price       Int
-  descriptiom String
+  description String
   active      Boolean @default(true)
 }
 
@@ -139,7 +139,7 @@ model AppointmentDetail {
   discountAmt                          Int
   uId                                  String?
   geoLocation                          GeoLocation         @relation(fields: [geoLocationId], references: [id])
-  geoLocationId                        String              @unique
+  geoLocationId                        String              
   membership                           Membership          @relation(fields: [membershipId], references: [id])
   membershipId                         String
   orderDetail                          PaymentOrderSuccess @relation(fields: [paymentOrderSuccessRazorpay_order_id], references: [razorpay_order_id])

@@ -8,17 +8,14 @@ export class GeoLocationDto {
   long: number;
 
   @IsString()
-  userId: string;
+  user_id: string;
 
   @IsString() 
   user: string;
 
-  // @IsString()
-  // @IsOptional()
-  // AppointmentDetailId: string;
-
   @IsString()
   @IsOptional()
-  AppointmentDetail: object;
-  AppointmentDetailId: any;
+  Appointment_detail: object;
+  Appointment_detail_id: any;
+  // user_id: any;
 }

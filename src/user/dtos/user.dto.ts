@@ -5,7 +5,6 @@ import {
   IsOptional,
   IsNotEmpty,
   ValidateNested,
-  IsObject,
 } from 'class-validator';
 import { GeoLocationDto } from './geoLocation.dto';
 import { MembersDto } from './members.dto';
@@ -13,7 +12,7 @@ import { MembersDto } from './members.dto';
 export class UserDto {
   @IsString()
   @IsOptional()
-  healthPackage: string;
+  health_package: string;
 
   @IsString()
   @IsOptional()
@@ -48,10 +47,9 @@ export class UserDto {
   @IsOptional()
   address: string;
 
-  // @IsObject()
   @ValidateNested()
   @Type(() => GeoLocationDto)
-  geoLocation: GeoLocationDto;
+  geo_location: GeoLocationDto;
 
   @IsString()
   @IsOptional()

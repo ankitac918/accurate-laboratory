@@ -1,12 +1,12 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Prisma, test } from '@prisma/client';
+import { Prisma, Test } from '@prisma/client';
 import { TestDto } from '../dtos/Test.dto';
 
 @Injectable()
 export class TestService {
   constructor(private prisma: PrismaService) {}
-  async createTest(data: Prisma.testCreateInput): Promise<test> {
+  async createTest(data: Prisma.TestCreateInput): Promise<Test> {
     try {
       const test = await this.prisma.test.create({
         data,

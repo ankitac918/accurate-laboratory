@@ -14,5 +14,5 @@ export class SlotDto {
 
   @ValidateNested()
   @Type(() => SlotTimeDto)
-  SlotTime: SlotTimeDto;
+  Slot_time: SlotTimeDto;
 }

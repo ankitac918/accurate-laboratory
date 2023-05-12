@@ -30,4 +30,8 @@ export class MembersService {
       data: member,
     });
   }
+
+  delete(id: string) {
+    return this.prisma.member.delete({ where: { id: id } });
+  }
 }

@@ -6,6 +6,8 @@ import {
   Get,
   Delete,
   Patch,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from '../userService/user.service';
 import { UserDto } from '../dtos/user.dto';
@@ -17,8 +19,10 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  signup(@Body() dto: User) {
-    this.userService.signup(dto);
+  signup(@Body('email') dto: User) {
+    const result = this.userService.signup(dto);
+    if (!result) return result;
+    else throw new HttpException('Credentials taken', HttpStatus.FORBIDDEN);
   }
 
   @Get('sigin')

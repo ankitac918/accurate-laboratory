@@ -14,5 +14,5 @@ export class MembersDto {
     price:string
 
     @IsString()
-    userId:string
+    user_id:string
 }

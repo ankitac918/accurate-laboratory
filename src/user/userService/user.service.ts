@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserDto } from '../dtos/user.dto';
 import * as argon2 from 'argon2';
-import { ForbiddenException } from '@nestjs/common/exceptions';
+import { ForbiddenException, HttpException } from '@nestjs/common/exceptions';
 import { Prisma } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -18,9 +18,7 @@ export class UserService {
     private config: ConfigService,
   ) {}
 
-  async signup(
-    data: Prisma.UserCreateInput
-  ): Promise<any> {
+  async signup(data: Prisma.UserCreateInput): Promise<any> {
     try {
       const passwordHash = await argon2.hash(data.password);
       const user = await this.prisma.user.create({
@@ -33,10 +31,10 @@ export class UserService {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ForbiddenException('Credentials taken');
+          return new HttpException('Credentials taken', HttpStatus.FORBIDDEN);
         }
       }
-      throw error;
+      return error;
     }
   }
 
@@ -79,14 +77,14 @@ export class UserService {
 
   findAllUser() {
     return this.prisma.user.findMany({
-      include: { geoLocation: true, members: true },
+      include: { geo_location: true, members: true },
     });
   }
 
   getUser(id: string) {
     return this.prisma.user.findFirst({
       where: { id: id },
-      include: { geoLocation: true, members: true },
+      include: { geo_location: true, members: true },
     });
   }
 
@@ -98,8 +96,8 @@ export class UserService {
   }
 
   async deleteUser(id: string) {
-    await this.prisma.geoLocation.deleteMany({ where: { userId: id } });
-    await this.prisma.member.deleteMany({ where: { userId: id } });
+    await this.prisma.geoLocation.deleteMany({ where: { user_id: id } });
+    await this.prisma.member.deleteMany({ where: { user_id: id } });
     return this.prisma.user.delete({
       where: { id: id },
     });

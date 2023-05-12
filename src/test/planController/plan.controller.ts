@@ -1,4 +1,4 @@
-import { Controller, Body, Post, Get } from '@nestjs/common';
+import { Controller, Body, Post, Get, Delete, Param } from '@nestjs/common';
 import { PlanService } from '../planService/plan.service';
 import { PlanDto } from '../dtos/Plan.dto';
 
@@ -14,5 +14,10 @@ export class PlanController {
   @Get()
   getPlan() {
     return this.planServive.getPlan();
+  }
+
+  @Delete(':id')
+  deletePlan(@Param('id') id: string) {
+    return this.planServive.deleteplan(id);
   }
 }

@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { PlanDto } from '../dtos/Plan.dto';
-import { Prisma, test } from '@prisma/client';
+import { Prisma, Test } from '@prisma/client';
 
 @Injectable()
 export class PlanService {
@@ -10,8 +10,8 @@ export class PlanService {
     try {
       const plan = this.prisma.plan.create({
         data: {
-          testId: dto.testsId,
-          planeName: dto.planeName,
+          test_id: dto.test_id,
+          plane_name: dto.plane_name,
           price: dto.price,
         },
       });
@@ -28,5 +28,9 @@ export class PlanService {
 
   getPlan() {
     return this.prisma.plan.findMany();
+  }
+
+  deleteplan(id:string){
+    return this.prisma.plan.delete({where:{id:id}})
   }
 }

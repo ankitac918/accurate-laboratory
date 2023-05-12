@@ -2,11 +2,13 @@ import { IsString } from 'class-validator';
 
 export class PlanDto {
   @IsString()
-  testsId: string;
+  test_id: string;
 
   @IsString()
-  planeName: string;
+  plane_name: string;
 
   @IsString()
   price: string;
+  // plane_name: any;
+  // test_id: any;
 }

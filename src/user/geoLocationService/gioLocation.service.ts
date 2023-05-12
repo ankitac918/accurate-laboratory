@@ -11,7 +11,7 @@ export class GeoLoacationService {
         data: {
           lat: dto.lat,
           long: dto.long,
-          userId: dto.userId,
+          user_id: dto.user_id,
         },
       });
       console.log(Geolocation);

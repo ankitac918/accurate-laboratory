@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { MembersService } from '../membersService/members.service';
 import { MembersDto } from '../dtos/members.dto';
 import { MemberNotFoundException } from '../exception/memeberException';
@@ -34,5 +42,10 @@ export class MemberesController {
     const update = await this.memberService.update(id, updateMember);
     if (update != null) return update;
     else throw new MemberNotFoundException();
+  }
+
+  @Delete(':id')
+  deleteMember(@Param('id') id: string) {
+    return this.memberService.delete(id);
   }
 }

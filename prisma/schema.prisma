@@ -1,0 +1,188 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//START ** USER
+model User {
+  id             String        @id @default(uuid())
+  health_package String?
+  tests          String?
+  name           String
+  email          String        @unique
+  gender         String?
+  age            String?
+  mobile         String?
+  password       String
+  address        String?
+  geo_location   GeoLocation[]
+  distance       String?
+  dob            String?
+  members        Member[]
+}
+
+model GeoLocation {
+  id                 String              @id @default(uuid())
+  lat                Int
+  long               Int
+  user               User?               @relation(fields: [user_id], references: [id])
+  user_id            String?
+  // AppointmentDetailId String              @unique
+  Appointment_detail AppointmentDetail[]
+}
+
+model Member {
+  id          String   @id @default(uuid())
+  members     String[]
+  name        String
+  description String
+  price       String
+  active      Boolean  @default(true)
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id])
+}
+
+//END USER
+
+//  START ** TEST 
+model Test {
+  active          Boolean @default(true)
+  home_collection Boolean @default(false)
+  id              String  @id @default(uuid())
+  name            String
+  outsource       Boolean @default(true)
+  plans           Plan[]
+  price           String
+}
+
+model Plan {
+  id         String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  plane_name String
+  price      String
+  test       Test   @relation(fields: [test_id], references: [id])
+  test_id    String
+}
+
+//******END TEST************//
+
+model Staff {
+  id      String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name    String
+  email   String
+  phone   String
+  address String
+  active  Boolean @default(true)
+}
+
+model Membership {
+  id                 String              @id @default(uuid())
+  name               String
+  description        String
+  duration           Int
+  active             Boolean             @default(true)
+  price              Int
+  Appointment_detail AppointmentDetail[]
+}
+
+// ******* SLOT MODEL STARTS FROM HERE*************//
+model Slot {
+  id          String     @id @default(uuid())
+  date        DateTime   @default(now())
+  is_selected Boolean?   @default(true) @map("is_selected")
+  start       DateTime   @default(now())
+  end         DateTime   @default(now())
+  slots       SlotTime[]
+
+  @@map("slots")
+}
+
+model SlotTime {
+  id      String @id @default(uuid())
+  allowed Int
+  booked  Int
+  name    String
+  Slot    Slot   @relation(fields: [slot_id], references: [id])
+  slot_id String
+
+  @@map("slot_Time")
+}
+
+model MemberPlan {
+  id          String  @id @default(uuid())
+  name        String
+  price       Int
+  description String
+  active      Boolean @default(true)
+}
+
+model AppointmentDetail {
+  id                                      String              @id @default(uuid())
+  healthPackage                           HealthPackage?      @relation(fields: [health_package_id], references: [id])
+  tests                                   HealthTest[]
+  name                                    String
+  email                                   String
+  gender                                  String
+  age                                     Int
+  dob                                     String
+  mobile                                  Int
+  date                                    String
+  time                                    String
+  password                                String
+  address                                 String
+  status                                  String?
+  grand_total                             Int
+  pickup_charge                           Int
+  discount_amt                            Int
+  u_Id                                    String?
+  geo_location                            GeoLocation         @relation(fields: [geo_lcation_id], references: [id])
+  geo_lcation_id                          String
+  membership                              Membership          @relation(fields: [membership_id], references: [id])
+  membership_id                           String
+  order_detail                            PaymentOrderSuccess @relation(fields: [payment_order_success_razorpay_order_id], references: [razorpay_order_id])
+  payment_order_success_razorpay_order_id String
+  // images        NzUploadFile[]
+  health_package_id                       String?
+}
+
+model HealthPackage {
+  id                 String              @id @default(uuid())
+  name               String
+  price              Int
+  active             Boolean             @default(true)
+  parameters         Int
+  health_tests       String[]
+  description        String
+  Appointment_detail AppointmentDetail[]
+}
+
+model HealthTest {
+  id                    String             @id @default(uuid())
+  name                  String
+  price                 Int
+  active                Boolean            @default(true)
+  outsource             Boolean            @default(true)
+  home_collection       Boolean            @default(true)
+  plans                 TestPricePlan[]
+  offer_price           Int?
+  Appointment_detail    AppointmentDetail? @relation(fields: [appointment_detail_id], references: [id])
+  appointment_detail_id String?
+}
+
+model TestPricePlan {
+  planId        String      @id @default(uuid())
+  plan_name     String
+  price         Int
+  Health_test   HealthTest? @relation(fields: [healthTest_id], references: [id])
+  healthTest_id String?
+}
+
+model PaymentOrderSuccess {
+  razorpay_order_id   String              @id @default(uuid())
+  razorpay_payment_id String
+  razorpay_signature  String
+  Appointment_detail  AppointmentDetail[]
+}

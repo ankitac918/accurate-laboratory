@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE "GeoLocation" ALTER COLUMN "lat" SET DATA TYPE TEXT,
+ALTER COLUMN "long" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Member" ALTER COLUMN "price" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "distance" SET DATA TYPE TEXT;
